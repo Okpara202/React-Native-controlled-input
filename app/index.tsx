@@ -1,47 +1,71 @@
+import Example from "@/components/Example";
 import { useState } from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
+import {
+  Button,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 
 export default function Index() {
-  const [count, setCount] = useState(0);
-  const [players, setPlayers] = useState(["Idara", "Michael", "Sarah", "John"]);
-  const [show, setShow] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const increaseCountButton = () => {
-    setCount(count + 1);
+  const [showPassword, setShowPassword] = useState(true);
+
+  const handleSubmit = () => {
+    console.log({ name, email, password });
+    setName("");
+    setEmail("");
+    setPassword("");
   };
 
-  const decreaseCountButton = () => {
-    if (count > 0) {
-      setCount(count - 1);
-    }
-  };
-
-  const toggleShow = () => {
-    setShow((prevState) => !prevState);
-  };
-
-  console.log(count);
+  const count = 0;
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.counter}>{count}</Text>
-      <View style={styles.buttonContainer}>
-        <Button onPress={decreaseCountButton} title="-" />
-        <Button onPress={increaseCountButton} title="+" />
+    <ScrollView>
+      <View style={styles.container}>
+        <TextInput
+          multiline
+          value={name}
+          onChangeText={(text) => setName(text)}
+          placeholder="Enter your name"
+          style={styles.input}
+        />
+
+        <TextInput placeholder="Enter your name" style={styles.input} />
+
+        <TextInput
+          value={email}
+          onChangeText={(text) => setEmail(text)}
+          placeholder="Enter your email"
+          style={styles.input}
+        />
+
+        <TextInput
+          value={password}
+          onChangeText={(text) => setPassword(text)}
+          secureTextEntry={showPassword}
+          placeholder="Enter your Phone number"
+          keyboardType="numeric"
+          style={styles.input}
+        />
+
+        <Text>{count}</Text>
+
+        <Button onPress={handleSubmit} title="Submit" />
+
+        <Button
+          onPress={() => setShowPassword((prevState) => !prevState)}
+          title={showPassword ? "Show Password" : "Hide Password"}
+        />
+
+        {showPassword && <Example />}
       </View>
-
-      {show && (
-        <View>
-          {players.map((name) => (
-            <View key={name}>
-              <Text>{name}</Text>
-            </View>
-          ))}
-        </View>
-      )}
-
-      <Button onPress={toggleShow} title="Toggle Show" />
-    </View>
+    </ScrollView>
   );
 }
 
@@ -51,15 +75,15 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     justifyContent: "center",
     alignItems: "center",
-    gap: 15,
+    gap: 20,
   },
 
-  counter: {
-    fontSize: 50,
-    fontWeight: "black",
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    gap: 10,
+  input: {
+    width: "80%",
+    height: 50,
+    borderWidth: 1,
+    borderColor: "black",
+    borderRadius: 10,
+    padding: 10,
   },
 });
